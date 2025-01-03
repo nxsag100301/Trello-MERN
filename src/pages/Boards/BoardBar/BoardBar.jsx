@@ -10,6 +10,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { capitalizeFirstLetter } from '~/utils/formatter';
 
 
 const CHIP_STYLES = {
@@ -26,7 +27,9 @@ const CHIP_STYLES = {
     }
 }
 
+
 function BoardBar(props) {
+    const { boadBarData } = props
     return (
         <Box sx={{
             width: '100%',
@@ -37,18 +40,17 @@ function BoardBar(props) {
             gap: 2,
             paddingX: 2,
             overflowX: 'auto',
-            borderBottom: '1px solid white',
-            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2d3436' : '#1976d2')
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2d3436' : '#015fdd')
         }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Chip sx={CHIP_STYLES}
                     icon={<DashboardIcon />}
-                    label="Nguyen Xuan Sang"
+                    label={boadBarData.title}
                     clickable
                 />
                 <Chip sx={CHIP_STYLES}
                     icon={<VpnLockIcon />}
-                    label="Public/Private Workspace"
+                    label={capitalizeFirstLetter(boadBarData.type)}
                     clickable
                 />
                 <Chip sx={CHIP_STYLES}
@@ -83,24 +85,29 @@ function BoardBar(props) {
                 <Box>
                     <AvatarGroup
                         max={4}
-                        total={11}
+                        total={12}
                         sx={{
                             '& .MuiAvatar-root': {
                                 width: 30,
                                 height: 30,
                                 fontSize: 16,
-                                border: 'none'
+                                border: 'none',
+                                color: 'white',
+                                cursor: 'pointer',
+                                '&:first-of-type': {
+                                    bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#636e72' : '#6c5ce7')
+                                }
                             }
                         }}
                     >
-                        <Tooltip title="Remy Sharp">
-                            <Avatar alt="Remy Sharp" src="https://v5.mui.com/static/images/avatar/3.jpg" />
-                        </Tooltip>
                         <Tooltip title="Travis Howard">
                             <Avatar alt="Travis Howard" src="https://v5.mui.com/static/images/avatar/2.jpg" />
                         </Tooltip>
                         <Tooltip title="Cindy Baker">
                             <Avatar alt="Cindy Baker" src="https://v5.mui.com/static/images/avatar/1.jpg" />
+                        </Tooltip>
+                        <Tooltip title="Remy Sharp">
+                            <Avatar alt="Remy Sharp" src="https://v5.mui.com/static/images/avatar/3.jpg" />
                         </Tooltip>
                     </AvatarGroup>
                 </Box>
