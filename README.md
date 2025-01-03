@@ -1,6 +1,9 @@
 Dự án clone Trello:
+
 Công nghệ sử dụng: ReactJS, NodeJS(18.16.0), Material UI, RestfulAPI, MongoDB, ...
+
 Đang hoàn thiện backend...
+
 ![image](https://github.com/user-attachments/assets/061f2620-b888-416c-a03b-ec2eda2ccfe2)
 Kéo thả column:
 ![image](https://github.com/user-attachments/assets/dc7abe3f-ce95-4ed3-a764-754eb45dc8b7)
