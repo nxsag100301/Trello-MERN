@@ -45,12 +45,12 @@ function BoardBar(props) {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Chip sx={CHIP_STYLES}
                     icon={<DashboardIcon />}
-                    label={boadBarData.title}
+                    label={boadBarData?.title}
                     clickable
                 />
                 <Chip sx={CHIP_STYLES}
                     icon={<VpnLockIcon />}
-                    label={capitalizeFirstLetter(boadBarData.type)}
+                    label={capitalizeFirstLetter(boadBarData?.type)}
                     clickable
                 />
                 <Chip sx={CHIP_STYLES}

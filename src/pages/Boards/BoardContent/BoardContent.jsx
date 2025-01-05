@@ -50,7 +50,7 @@ function BoardContent(props) {
     const sensors = useSensors(mouseSensor, touchSensor)
 
     useEffect(() => {
-        setOrderedColumns(mapOrder(board.columns, board.columnOrderIds, '_id'))
+        setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
     }, [board])
 
     const findColumnByCardId = (cardId) => {

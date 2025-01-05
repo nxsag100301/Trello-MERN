@@ -36,9 +36,11 @@ export default [
       'no-restricted-imports': [
         'error',
         {
-          'patterns': ['@mui/*/*/*']
+          patterns: ['@mui/*/*/*']
         }
-      ]
-    },
+      ],
+      'react/prop-types': 'off', // Tắt kiểm tra prop-types,
+      'no-unused-vars': 1
+    },    
   },
 ]

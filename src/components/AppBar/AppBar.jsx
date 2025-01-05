@@ -19,7 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import Notifications from './Menus/Notifications';
 
-function AppBar(props) {
+function AppBar() {
     const [searchValue, setSearchValue] = useState('')
     return (
         <Box sx={{
