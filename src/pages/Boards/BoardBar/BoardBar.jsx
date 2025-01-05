@@ -43,11 +43,13 @@ function BoardBar(props) {
             bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2d3436' : '#015fdd')
         }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Chip sx={CHIP_STYLES}
-                    icon={<DashboardIcon />}
-                    label={boadBarData?.title}
-                    clickable
-                />
+                <Tooltip title={boadBarData?.description}>
+                    <Chip sx={CHIP_STYLES}
+                        icon={<DashboardIcon />}
+                        label={boadBarData?.title}
+                        clickable
+                    />
+                </Tooltip>
                 <Chip sx={CHIP_STYLES}
                     icon={<VpnLockIcon />}
                     label={capitalizeFirstLetter(boadBarData?.type)}
