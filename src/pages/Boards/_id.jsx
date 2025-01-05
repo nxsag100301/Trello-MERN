@@ -8,17 +8,22 @@ import { fetchBoardDetailsAPI } from '~/apis';
 function Board() {
     const [board,setBoard] = useState(null)
     useEffect(()=> {
-        const boardId = '6779f8efc060b7df5c0bf7f3'
+        const boardId = '677a3205bdf6fa77993473b2'
         fetchBoardDetailsAPI(boardId).then(board => {
-            console.log(board)
             setBoard(board)
         })
     },[])
+
+    const boardBarData = {
+        title: board?.title,
+        type: board?.type,
+        description: board?.description,
+    }
     
     return (
         <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
             <AppBar />
-            <BoardBar boadBarData={board} />
+            <BoardBar boadBarData={boardBarData} />
             <BoardContent board={board} />
         </Container>
     );

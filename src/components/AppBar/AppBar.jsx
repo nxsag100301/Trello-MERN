@@ -88,6 +88,7 @@ function AppBar() {
                             </InputAdornment>
                         ),
                         endAdornment: (
+                            <InputAdornment position="end">
                             <CloseIcon
                                 onClick={() => setSearchValue('')}
                                 sx={{
@@ -96,6 +97,7 @@ function AppBar() {
                                     cursor: searchValue ? 'pointer' : ''
                                 }}
                             />
+                            </InputAdornment>
                         )
                     }}
                 />
