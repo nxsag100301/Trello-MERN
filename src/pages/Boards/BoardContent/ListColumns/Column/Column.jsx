@@ -20,23 +20,27 @@ import ListCards from './ListCards/ListCards'
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
-import { mapOrder } from '~/utils/sort'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
 const Column = (props) => {
-  const { column } = props
+  const { column, createNewCard } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const [openForm, setForm] = useState(false)
   const [cardTitle, setCardTitle] = useState('')
   const toggleOpenForm = () => setForm(!openForm)
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!cardTitle) {
       toast.error('Invalid title!')
       return
     }
-    console.log('cardTitle', cardTitle)
+    const newCardData = {
+      title: cardTitle,
+      columnId: column._id
+    }
+    createNewCard(newCardData)
+
     toggleOpenForm()
     setCardTitle('')
   }
@@ -69,7 +73,7 @@ const Column = (props) => {
     opacity: isDragging ? 0.5 : 1
   }
 
-  const orderedCard = mapOrder(column.cards, column.cardOrderIds, '_id')
+  const orderedCard = column.cards
 
   return (
     <div ref={setNodeRef} style={dndKitColumnStyle} {...attributes}>
