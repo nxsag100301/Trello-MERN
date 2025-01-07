@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import {
   createNewCardAPI,
   createNewColumnAPI,
+  deleteColumnAPI,
   fetchBoardDetailsAPI,
   moveCardDiffColumnAPI,
   updateBoardDetailsAPI,
@@ -17,6 +18,7 @@ import { mapOrder } from '~/utils/sort'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
+import { toast } from 'react-toastify'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -135,6 +137,19 @@ function Board() {
     })
   }
 
+  const deleteColumn = async (columnId) => {
+    const newBoard = { ...board }
+    newBoard.columns = newBoard.columns.filter((item) => item._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(
+      (item) => item !== columnId
+    )
+    setBoard(newBoard)
+
+    await deleteColumnAPI(columnId).then((res) => {
+      toast.success(res?.deleteResult)
+    })
+  }
+
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <AppBar />
@@ -165,6 +180,7 @@ function Board() {
             moveColumn={moveColumn}
             moveCardSameColumn={moveCardSameColumn}
             moveCardDiffColumn={moveCardDiffColumn}
+            deleteColumn={deleteColumn}
           />
         </Box>
       )}

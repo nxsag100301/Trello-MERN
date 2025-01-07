@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
 const ListColumns = (props) => {
-  const { columns, createNewColumn, createNewCard } = props
+  const { columns, createNewColumn, createNewCard, deleteColumn } = props
   const [openForm, setForm] = useState(false)
   const [columnTitle, setColumnTitle] = useState('')
   const toggleOpenForm = () => setForm(!openForm)
@@ -51,6 +51,7 @@ const ListColumns = (props) => {
               column={item}
               key={item._id}
               createNewCard={createNewCard}
+              deleteColumn={deleteColumn}
             />
           ))}
 
