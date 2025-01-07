@@ -11,19 +11,40 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
+import { createNewColumnAPI } from '~/apis'
+import { generatePlaceholderCard } from '~/utils/formatter'
+import { cloneDeep } from 'lodash'
+import {
+  selectCurrentActiveBoard,
+  updateCurrentActiveBoard
+} from '~/redux/activeBoard/activeBoardSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ListColumns = (props) => {
-  const { columns, createNewColumn, createNewCard, deleteColumn } = props
+  const { columns } = props
   const [openForm, setForm] = useState(false)
   const [columnTitle, setColumnTitle] = useState('')
   const toggleOpenForm = () => setForm(!openForm)
+  const dispatch = useDispatch()
+  const board = useSelector(selectCurrentActiveBoard)
 
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!columnTitle) {
       toast.error('Invalid title!')
       return
     }
-    createNewColumn(columnTitle)
+    const res = await createNewColumnAPI({
+      title: columnTitle,
+      boardId: board._id
+    })
+
+    res.cards = [generatePlaceholderCard(res)]
+    res.cardOrderIds = [generatePlaceholderCard(res._id)]
+
+    const newBoard = cloneDeep(board)
+    newBoard.columns.push(res)
+    newBoard.columnOrderIds.push(res._id)
+    dispatch(updateCurrentActiveBoard(newBoard))
     toggleOpenForm()
     setColumnTitle('')
   }
@@ -46,14 +67,7 @@ const ListColumns = (props) => {
         }}
       >
         {columns?.length > 0 &&
-          columns.map((item) => (
-            <Column
-              column={item}
-              key={item._id}
-              createNewCard={createNewCard}
-              deleteColumn={deleteColumn}
-            />
-          ))}
+          columns.map((item) => <Column column={item} key={item._id} />)}
 
         {/* Add new column */}
         {!openForm ? (
