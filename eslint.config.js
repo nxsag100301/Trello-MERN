@@ -40,7 +40,8 @@ export default [
         }
       ],
       'react/prop-types': 'off', // Tắt kiểm tra prop-types,
-      'no-unused-vars': 1
+      'no-unused-vars': 1,
+      'react/no-unescaped-entities': 0
     }
   }
 ]

@@ -337,6 +337,7 @@ const Column = (props) => {
                   variant='contained'
                   color='success'
                   size='small'
+                  className='interceptor-loading'
                   sx={{
                     boxShadow: 'none',
                     border: '1px solid',

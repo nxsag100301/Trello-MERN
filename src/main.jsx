@@ -7,27 +7,30 @@ import { ToastContainer } from 'react-toastify'
 import { ConfirmProvider } from 'material-ui-confirm'
 import { Provider } from 'react-redux'
 import { store } from '~/redux/store'
+import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
   <>
-    <Provider store={store}>
-      <CssVarsProvider theme={theme}>
-        <ConfirmProvider
-          defaultOptions={{
-            dialogProps: { maxWidth: 'xs' },
-            allowClose: false,
-            buttonOrder: ['confirm', 'cancel']
-          }}
-        >
-          <CssBaseline />
-          <App />
-          <ToastContainer
-            position='bottom-right'
-            autoClose={1500}
-            theme='colored'
-          />
-        </ConfirmProvider>
-      </CssVarsProvider>
-    </Provider>
+    <BrowserRouter basename='/'>
+      <Provider store={store}>
+        <CssVarsProvider theme={theme}>
+          <ConfirmProvider
+            defaultOptions={{
+              dialogProps: { maxWidth: 'xs' },
+              allowClose: false,
+              buttonOrder: ['confirm', 'cancel']
+            }}
+          >
+            <CssBaseline />
+            <App />
+            <ToastContainer
+              position='bottom-right'
+              autoClose={2000}
+              theme='colored'
+            />
+          </ConfirmProvider>
+        </CssVarsProvider>
+      </Provider>
+    </BrowserRouter>
   </>
 )

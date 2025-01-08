@@ -18,15 +18,17 @@ import {
   selectCurrentActiveBoard,
   updateCurrentActiveBoard
 } from '~/redux/activeBoard/activeBoardSlice'
+import { useParams } from 'react-router-dom'
 
 function Board() {
   const board = useSelector(selectCurrentActiveBoard)
   const dispatch = useDispatch()
+  const { boardId } = useParams()
+  //boardId = 677a3205bdf6fa77993473b2
 
   useEffect(() => {
-    const boardId = '677a3205bdf6fa77993473b2'
     dispatch(fetchBoardDetailsAPI(boardId))
-  }, [dispatch])
+  }, [dispatch, boardId])
 
   const boardBarData = {
     title: board?.title,
