@@ -45,8 +45,7 @@ const LoginForm = () => {
         pending: 'Logging in...'
       })
       .then((res) => {
-        console.log(res)
-        if (!res.error) navigate('/')
+        if (!res.error) navigate('/boards')
       })
   }
 

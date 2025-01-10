@@ -1,11 +1,32 @@
 import { configureStore } from '@reduxjs/toolkit'
 import activeBoardReducer from '~/redux/activeBoard/activeBoardSlice'
 import userReducer from '~/redux/user/userSlice'
+import activeCardReducer from '~/redux/activeCard/activeCardSlice'
+import storage from 'redux-persist/lib/storage'
+import { combineReducers } from 'redux'
+import { persistReducer } from 'redux-persist'
 
-export const store = configureStore({
-  reducer: {
-    activeBoard: activeBoardReducer,
-    user: userReducer
-  },
+const reducers = combineReducers({
+  activeBoard: activeBoardReducer,
+  activeCard: activeCardReducer,
+  user: userReducer
+})
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user']
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers)
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    }),
   devTools: true
 })
+
+export default store

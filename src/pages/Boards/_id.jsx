@@ -19,12 +19,14 @@ import {
   updateCurrentActiveBoard
 } from '~/redux/activeBoard/activeBoardSlice'
 import { useParams } from 'react-router-dom'
+import ActiveCard from '~/components/Modal/ActiveCard/ActiveCard'
+import { selectCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
 
 function Board() {
   const board = useSelector(selectCurrentActiveBoard)
+  const activeCard = useSelector(selectCurrentActiveCard)
   const dispatch = useDispatch()
   const { boardId } = useParams()
-  //boardId = 677a3205bdf6fa77993473b2
 
   useEffect(() => {
     dispatch(fetchBoardDetailsAPI(boardId))
@@ -93,6 +95,7 @@ function Board() {
 
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
+      {activeCard && <ActiveCard />}
       <AppBar />
       {!board ? (
         <Box
