@@ -17,8 +17,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import InputAdornment from '@mui/material/InputAdornment'
 import CloseIcon from '@mui/icons-material/Close'
 import { useState } from 'react'
-import Notifications from './Menus/Notifications'
 import { useNavigate } from 'react-router-dom'
+import Notifications from './Notifications/Notifications'
 
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
@@ -91,6 +91,7 @@ function AppBar() {
         </Box>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        {/* Searchboard */}
         <TextField
           id='outlined-search'
           label='Search...'

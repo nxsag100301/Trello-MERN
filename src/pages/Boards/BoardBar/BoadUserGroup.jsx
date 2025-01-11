@@ -4,14 +4,13 @@ import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import Popover from '@mui/material/Popover'
 
-function BoardUserGroup({ boardUsers = [], limit = 8 }) {
+function BoardUserGroup({ boardUsers = [], limit = 4 }) {
   const [anchorPopoverElement, setAnchorPopoverElement] = useState(null)
   const isOpenPopover = Boolean(anchorPopoverElement)
   const popoverId = isOpenPopover ? 'board-all-users-popover' : undefined
 
   const handleTogglePopover = (event) => {
-    if (!anchorPopoverElement) setAnchorPopoverElement(event.currentTarget)
-    else setAnchorPopoverElement(null)
+    setAnchorPopoverElement((prev) => (prev ? null : event.currentTarget))
   }
 
   const totalUsers = boardUsers.length
@@ -20,12 +19,26 @@ function BoardUserGroup({ boardUsers = [], limit = 8 }) {
 
   return (
     <>
-      <Box sx={{ display: 'flex', gap: '2px' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px', // Khoảng cách khi không đè
+          position: 'relative'
+        }}
+      >
         {displayedUsers.map((user, index) => (
-          <Tooltip title={user.name} key={user.id || index}>
+          <Tooltip title={user.displayName} key={user.id || index}>
             <Avatar
-              sx={{ width: 30, height: 30, cursor: 'pointer' }}
-              alt={user.name}
+              sx={{
+                width: 30,
+                height: 30,
+                cursor: 'pointer',
+                position: 'relative',
+                marginLeft: index > 0 ? '-15px' : 0,
+                zIndex: displayedUsers.length - index
+              }}
+              alt={user.displayName}
               src={user.avatar}
             />
           </Tooltip>
@@ -37,8 +50,8 @@ function BoardUserGroup({ boardUsers = [], limit = 8 }) {
               aria-describedby={popoverId}
               onClick={handleTogglePopover}
               sx={{
-                width: 32,
-                height: 32,
+                width: 30,
+                height: 30,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -47,7 +60,9 @@ function BoardUserGroup({ boardUsers = [], limit = 8 }) {
                 fontWeight: '500',
                 borderRadius: '50%',
                 color: 'white',
-                backgroundColor: '#a4b0be'
+                backgroundColor: '#a4b0be',
+                marginLeft: '-15px',
+                zIndex: 0
               }}
             >
               +{hiddenUserCount}
@@ -73,10 +88,10 @@ function BoardUserGroup({ boardUsers = [], limit = 8 }) {
           }}
         >
           {boardUsers.map((user, index) => (
-            <Tooltip title={user.name} key={user.id || index}>
+            <Tooltip title={user.displayName} key={user.id || index}>
               <Avatar
                 sx={{ width: 34, height: 34, cursor: 'pointer' }}
-                alt={user.name}
+                alt={user.displayName}
                 src={user.avatar}
               />
             </Tooltip>

@@ -20,23 +20,15 @@ import {
 } from '~/redux/activeBoard/activeBoardSlice'
 import { useParams } from 'react-router-dom'
 import ActiveCard from '~/components/Modal/ActiveCard/ActiveCard'
-import { selectCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
 
 function Board() {
   const board = useSelector(selectCurrentActiveBoard)
-  const activeCard = useSelector(selectCurrentActiveCard)
   const dispatch = useDispatch()
   const { boardId } = useParams()
 
   useEffect(() => {
     dispatch(fetchBoardDetailsAPI(boardId))
   }, [dispatch, boardId])
-
-  const boardBarData = {
-    title: board?.title,
-    type: board?.type,
-    description: board?.description
-  }
 
   const moveColumn = (dndOrderedColumns) => {
     const dndOrderedColumnsIds = dndOrderedColumns.map((item) => item._id)
@@ -95,7 +87,9 @@ function Board() {
 
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
-      {activeCard && <ActiveCard />}
+      {/* Modal active card */}
+      <ActiveCard />
+
       <AppBar />
       {!board ? (
         <Box
@@ -116,7 +110,7 @@ function Board() {
         </Box>
       ) : (
         <Box>
-          <BoardBar boadBarData={boardBarData} />
+          <BoardBar board={board} />
           <BoardContent
             board={board}
             moveColumn={moveColumn}

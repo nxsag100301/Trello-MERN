@@ -6,10 +6,9 @@ import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import BoltIcon from '@mui/icons-material/Bolt'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Tooltip from '@mui/material/Tooltip'
-import Button from '@mui/material/Button'
-import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { capitalizeFirstLetter } from '~/utils/formatter'
 import BoardUserGroup from './BoadUserGroup'
+import InviteBoardUser from './InviteBoardUser'
 
 const CHIP_STYLES = {
   color: 'white',
@@ -26,12 +25,8 @@ const CHIP_STYLES = {
 }
 
 function BoardBar(props) {
-  const { boadBarData } = props
-  const fakeBoardUsers = Array.from({ length: 20 }, (_, index) => ({
-    id: index + 1,
-    name: `User ${index + 1}`,
-    avatar: `https://i.pravatar.cc/150?img=${index + 1}` // Fake avatar
-  }))
+  const { board } = props
+
   return (
     <Box
       sx={{
@@ -48,18 +43,18 @@ function BoardBar(props) {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Tooltip title={boadBarData?.description}>
+        <Tooltip title={board?.description}>
           <Chip
             sx={CHIP_STYLES}
             icon={<DashboardIcon />}
-            label={boadBarData?.title}
+            label={board?.title}
             clickable
           />
         </Tooltip>
         <Chip
           sx={CHIP_STYLES}
           icon={<VpnLockIcon />}
-          label={capitalizeFirstLetter(boadBarData?.type)}
+          label={capitalizeFirstLetter(board?.type)}
           clickable
         />
         <Chip
@@ -83,19 +78,10 @@ function BoardBar(props) {
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Button
-          variant='outlined'
-          startIcon={<PersonAddIcon />}
-          sx={{
-            color: 'white',
-            borderColor: 'white',
-            '&:hover': { borderColor: 'white' }
-          }}
-        >
-          Invite
-        </Button>
+        <InviteBoardUser boardId={board._id} />
+
         <Box>
-          <BoardUserGroup boardUsers={fakeBoardUsers} limit={4} />
+          <BoardUserGroup boardUsers={board.FE_allUsers} limit={4} />
         </Box>
       </Box>
     </Box>

@@ -38,6 +38,7 @@ export const activeBoardSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchBoardDetailsAPI.fulfilled, (state, action) => {
       let board = action.payload
+      board.FE_allUsers = board.owners.concat(board.members)
       board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
       board.columns.forEach((item) => {
         if (isEmpty(item.cards)) {

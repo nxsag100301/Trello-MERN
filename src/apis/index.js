@@ -31,6 +31,12 @@ export const createNewBoardAPI = async (data) => {
   return response.data
 }
 
+export const inviteUserToBoardAPI = async (data) => {
+  const response = await axios.post('/v1/invitations/board', data)
+  toast.success('User invited to board successfully!')
+  return response.data
+}
+
 // Column
 export const createNewColumnAPI = async (data) => {
   const res = await axios.post('/v1/columns', data)

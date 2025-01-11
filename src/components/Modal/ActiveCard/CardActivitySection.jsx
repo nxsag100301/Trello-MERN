@@ -4,26 +4,24 @@ import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
-
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '~/redux/user/userSlice'
 
-function CardActivitySection() {
+function CardActivitySection({ cardComments = [], onAddCardComment }) {
   const currentUser = useSelector(selectCurrentUser)
 
   const handleAddCardComment = (event) => {
     // Bắt hành động người dùng nhấn phím Enter && không phải hành động Shift + Enter
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault() // Thêm dòng này để khi Enter không bị nhảy dòng
-      if (!event.target?.value) return // Nếu không có giá trị gì thì return không làm gì cả
+      if (!event.target?.value) return
 
-      // Tạo một biến commend data để gửi api
       const commentToAdd = {
         userAvatar: currentUser?.avatar,
         userDisplayName: currentUser?.displayName,
         content: event.target.value.trim()
       }
-      console.log(commentToAdd)
+      onAddCardComment(commentToAdd).then(() => (event.target.value = ''))
     }
   }
 
@@ -46,7 +44,7 @@ function CardActivitySection() {
         />
       </Box>
       {/* Hiển thị danh sách các comments */}
-      {[...Array(0)].length === 0 && (
+      {cardComments.length === 0 ? (
         <Typography
           sx={{
             pl: '45px',
@@ -57,51 +55,52 @@ function CardActivitySection() {
         >
           No activity found!
         </Typography>
-      )}
-      {[...Array(6)].map((_, index) => (
-        <Box
-          sx={{ display: 'flex', gap: 1, width: '100%', mb: 1.5 }}
-          key={index}
-        >
-          <Tooltip title='trungquandev'>
-            <Avatar
-              sx={{ width: 36, height: 36, cursor: 'pointer' }}
-              alt='trungquandev'
-              src='https://mui.com/static/images/cards/contemplative-reptile.jpg'
-            />
-          </Tooltip>
-          <Box sx={{ width: 'inherit' }}>
-            <Typography
-              variant='body2'
-              sx={{ fontWeight: 'bold', mr: 1, display: 'inline' }}
-            >
-              Quan Do
-            </Typography>
-            <Typography
-              variant='body2'
-              sx={{ fontSize: '12px', display: 'inline' }}
-            >
-              {moment().format('llll')}
-            </Typography>
+      ) : (
+        cardComments.map((item, index) => (
+          <Box
+            sx={{ display: 'flex', gap: 1, width: '100%', mb: 1.5 }}
+            key={index}
+          >
+            <Tooltip title='trungquandev'>
+              <Avatar
+                sx={{ width: 36, height: 36, cursor: 'pointer' }}
+                alt='trungquandev'
+                src={item?.userAvatar}
+              />
+            </Tooltip>
+            <Box sx={{ width: 'inherit' }}>
+              <Typography
+                variant='body2'
+                sx={{ fontWeight: 'bold', mr: 1, display: 'inline' }}
+              >
+                {item?.userDisplayName}
+              </Typography>
+              <Typography
+                variant='body2'
+                sx={{ fontSize: '12px', display: 'inline' }}
+              >
+                {moment(item?.commentedAt).format('llll')}
+              </Typography>
 
-            <Box
-              sx={{
-                display: 'block',
-                bgcolor: (theme) =>
-                  theme.palette.mode === 'dark' ? '#33485D' : 'white',
-                p: '8px 12px',
-                mt: '4px',
-                border: '0.5px solid rgba(0, 0, 0, 0.2)',
-                borderRadius: '4px',
-                wordBreak: 'break-word',
-                boxShadow: '0 0 1px rgba(0, 0, 0, 0.2)'
-              }}
-            >
-              This is a comment!
+              <Box
+                sx={{
+                  display: 'block',
+                  bgcolor: (theme) =>
+                    theme.palette.mode === 'dark' ? '#33485D' : 'white',
+                  p: '8px 12px',
+                  mt: '4px',
+                  border: '0.5px solid rgba(0, 0, 0, 0.2)',
+                  borderRadius: '4px',
+                  wordBreak: 'break-word',
+                  boxShadow: '0 0 1px rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                {item?.content}
+              </Box>
             </Box>
           </Box>
-        </Box>
-      ))}
+        ))
+      )}
     </Box>
   )
 }

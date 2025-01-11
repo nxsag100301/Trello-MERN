@@ -11,7 +11,10 @@ import AttachmentIcon from '@mui/icons-material/Attachment'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useDispatch } from 'react-redux'
-import { updateCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
+import {
+  showModalActiveCard,
+  updateCurrentActiveCard
+} from '~/redux/activeCard/activeCardSlice'
 
 const Card = (props) => {
   const dispatch = useDispatch()
@@ -48,6 +51,7 @@ const Card = (props) => {
 
   const handleActiveCard = () => {
     dispatch(updateCurrentActiveCard(card))
+    dispatch(showModalActiveCard(card))
   }
 
   return (

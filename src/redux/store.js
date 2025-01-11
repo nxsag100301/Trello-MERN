@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import activeBoardReducer from '~/redux/activeBoard/activeBoardSlice'
 import userReducer from '~/redux/user/userSlice'
 import activeCardReducer from '~/redux/activeCard/activeCardSlice'
+import notificationsReducer from '~/redux/notifications/notificationsSlice'
 import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
@@ -9,6 +10,7 @@ import { persistReducer } from 'redux-persist'
 const reducers = combineReducers({
   activeBoard: activeBoardReducer,
   activeCard: activeCardReducer,
+  notifications: notificationsReducer,
   user: userReducer
 })
 

@@ -2,14 +2,17 @@ import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
 import CancelIcon from '@mui/icons-material/Cancel'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
 import SubjectRoundedIcon from '@mui/icons-material/SubjectRounded'
 import DvrOutlinedIcon from '@mui/icons-material/DvrOutlined'
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined'
@@ -17,13 +20,11 @@ import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined'
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined'
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined'
 import AspectRatioOutlinedIcon from '@mui/icons-material/AspectRatioOutlined'
-import AddToDriveOutlinedIcon from '@mui/icons-material/AddToDriveOutlined'
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
-import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined'
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
+import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined'
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined'
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
+import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined'
+import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined'
+import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined'
 import ToggleFocusInput from '~/components/Form/ToggleFocusInput'
 import CardUserGroup from './CardUserGroup'
 import CardDescriptionMdEditor from './CardDescriptionMdEditor'
@@ -32,13 +33,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   clearCurrentActiveCard,
   selectCurrentActiveCard,
+  selectIsShowModalActiveCard,
   updateCurrentActiveCard
 } from '~/redux/activeCard/activeCardSlice'
 import { updateCardDetailsAPI } from '~/apis'
 import { updateCardInBoard } from '~/redux/activeBoard/activeBoardSlice'
-import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { singleFileValidator } from '~/utils/validators'
+import { selectCurrentUser } from '~/redux/user/userSlice'
+import { CARD_MEMBER_ACTIONS } from '~/utils/constants'
 
 const SidebarItem = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -64,19 +67,17 @@ const SidebarItem = styled(Box)(({ theme }) => ({
 function ActiveCard() {
   const dispatch = useDispatch()
   const activeCard = useSelector(selectCurrentActiveCard)
-  const [loading, setLoading] = useState(false)
+  const currentUser = useSelector(selectCurrentUser)
+  const isShowActiveCard = useSelector(selectIsShowModalActiveCard)
   const handleCloseModal = () => {
-    if (!loading) {
-      dispatch(clearCurrentActiveCard())
-    }
+    dispatch(clearCurrentActiveCard())
   }
 
   const callApiUpdateCard = async (updateData) => {
-    setLoading(true)
     const updatedCard = await updateCardDetailsAPI(activeCard._id, updateData)
     dispatch(updateCurrentActiveCard(updatedCard))
     dispatch(updateCardInBoard(updatedCard))
-    return setLoading(false)
+    return updatedCard
   }
 
   const onUpdateCardTitle = (newTitle) => {
@@ -102,12 +103,20 @@ function ActiveCard() {
     callApiUpdateCard({ description: newDescription })
   }
 
+  const onAddCardComment = async (commentToAdd) => {
+    await callApiUpdateCard({ commentToAdd })
+  }
+
+  const onUpdateCardMembers = (incomingMemberInfo) => {
+    callApiUpdateCard({ incomingMemberInfo })
+  }
+
   return (
     <Modal
       onClose={handleCloseModal}
       sx={{ overflowY: 'auto' }}
       disableScrollLock
-      open={true}
+      open={isShowActiveCard}
     >
       <Box
         sx={{
@@ -184,7 +193,10 @@ function ActiveCard() {
               >
                 Members
               </Typography>
-              <CardUserGroup />
+              <CardUserGroup
+                cardMemberIds={activeCard?.memberIds}
+                onUpdateCardMembers={onUpdateCardMembers}
+              />
             </Box>
 
             <Box sx={{ mb: 3 }}>
@@ -213,7 +225,10 @@ function ActiveCard() {
                   Activity
                 </Typography>
               </Box>
-              <CardActivitySection />
+              <CardActivitySection
+                cardComments={activeCard?.comments}
+                onAddCardComment={onAddCardComment}
+              />
             </Box>
           </Grid>
 
@@ -225,10 +240,34 @@ function ActiveCard() {
               Add To Card
             </Typography>
             <Stack direction='column' spacing={1}>
-              <SidebarItem className='active'>
-                <PersonOutlineOutlinedIcon fontSize='small' />
-                Join
-              </SidebarItem>
+              {!activeCard?.memberIds?.includes(currentUser._id) ? (
+                <SidebarItem
+                  onClick={() =>
+                    onUpdateCardMembers({
+                      userId: currentUser._id,
+                      action: CARD_MEMBER_ACTIONS.ADD
+                    })
+                  }
+                  className='active'
+                >
+                  <PersonAddAltOutlinedIcon fontSize='small' />
+                  Join
+                </SidebarItem>
+              ) : (
+                <SidebarItem
+                  onClick={() =>
+                    onUpdateCardMembers({
+                      userId: currentUser._id,
+                      action: CARD_MEMBER_ACTIONS.REMOVE
+                    })
+                  }
+                  className='active'
+                >
+                  <PersonRemoveOutlinedIcon fontSize='small' />
+                  Leave
+                </SidebarItem>
+              )}
+
               <SidebarItem className='active' component='label'>
                 <ImageOutlinedIcon fontSize='small' />
                 Cover
@@ -273,7 +312,7 @@ function ActiveCard() {
                 Card Size
               </SidebarItem>
               <SidebarItem>
-                <AddToDriveOutlinedIcon fontSize='small' />
+                <AddToDriveIcon fontSize='small' />
                 Google Drive
               </SidebarItem>
               <SidebarItem>

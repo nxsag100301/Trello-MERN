@@ -50,7 +50,7 @@ const Column = (props) => {
       return
     }
     const newCardData = {
-      title: cardTitle,
+      title: cardTitle.trim(),
       columnId: column._id
     }
     const res = await createNewCardAPI({
