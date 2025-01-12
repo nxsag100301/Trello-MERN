@@ -1,6 +1,7 @@
 Dự án clone Trello:
 
 FE: ReactJS, Redux, Axios, Material UI, Dnd-kit(kéo thả), socket-io(real-time)
+
 BE: NodeJS(18.16.0), RestfulAPI, MongoDB, JWT, socket-io(real-time)
 
 ![image](https://github.com/user-attachments/assets/d6e86f25-d552-4376-98ad-af774fe74b04)
