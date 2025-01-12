@@ -75,6 +75,23 @@ const LoginForm = () => {
             flexDirection: 'column'
           }}
         >
+          <Alert
+            severity='success'
+            sx={{
+              '.MuiAlert-message': { overflow: 'hidden' },
+              display: 'flex',
+              textAlign: 'start'
+            }}
+          >
+            <Typography variant='span'>
+              Tài khoản: <b>nguyenxuansang@gmail.com</b>
+              <br />
+              Mật khẩu: <b>12345678a</b>
+            </Typography>
+            <br />
+            Đăng nhập lần đầu sẽ mất khoảng 30s do sử dụng gói free của render
+            :((
+          </Alert>
           {verifiedEmail && (
             <Alert
               severity='success'

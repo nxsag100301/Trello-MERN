@@ -47,6 +47,11 @@ Tìm kiếm bảng:
 Thêm card hoặc column mới trong bảng: 
 ![image](https://github.com/user-attachments/assets/0c778656-4201-41ab-9b98-61f22449e775)
 
+Thông tin chi tiết, đổi mật khẩu:
+![image](https://github.com/user-attachments/assets/cf59ee97-9892-4be8-9b0c-d0b92661e539)
+![image](https://github.com/user-attachments/assets/8991e54c-d751-46bd-afe8-4ac3463478ab)
+
+
 Đăng nhập: 
 ![image](https://github.com/user-attachments/assets/b890c687-6a99-451f-a3a5-c0e72b76acf0)
 
