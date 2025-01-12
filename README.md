@@ -18,7 +18,8 @@ Kéo thả card:
 
 
 Kéo thả card vào column khác:
-![image](https://github.com/user-attachments/assets/44123d36-deca-4fcd-a1e1-8299b147404d)
+![image](https://github.com/user-attachments/assets/d15738df-83d0-4f27-b8a8-02d37acd0dbc)
+
 ![image](https://github.com/user-attachments/assets/973bdfe8-e72e-474b-b82f-6bd2a1467165)
 
 Chi tiết card(Thành viên của card, bình luận, ảnh cover card):
