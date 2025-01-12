@@ -13,6 +13,7 @@ export const useDebounceFn = (fnToDebounce, delay = 500) => {
   }
 
   // Sử dụng useCallback để tránh re-render không cần thiết
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return useCallback(
     debounce((...args) => {
       fnToDebounce(...args)
