@@ -8,20 +8,15 @@ import Workspaces from './Menus/Workspaces'
 import Recent from './Menus/Recent'
 import Starred from './Menus/Starred'
 import Templates from './Menus/Templates'
-import TextField from '@mui/material/TextField'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Tooltip from '@mui/material/Tooltip'
 import Profile from './Menus/Profile'
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
-import SearchIcon from '@mui/icons-material/Search'
-import InputAdornment from '@mui/material/InputAdornment'
-import CloseIcon from '@mui/icons-material/Close'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Notifications from './Notifications/Notifications'
+import AutoCompleteSearchBoard from './SearchBoards/AutoCompleteSearchBoard'
 
 function AppBar() {
-  const [searchValue, setSearchValue] = useState('')
   const navigate = useNavigate()
   return (
     <Box
@@ -92,45 +87,7 @@ function AppBar() {
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         {/* Searchboard */}
-        <TextField
-          id='outlined-search'
-          label='Search...'
-          type='text'
-          size='small'
-          value={searchValue}
-          onChange={(event) => setSearchValue(event.target.value)}
-          sx={{
-            minWidth: '120px',
-            maxWidth: '170px',
-            '& label': { color: 'white' },
-            '& input': { color: 'white' },
-            '& label.Mui-focused': { color: 'white' },
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': { borderColor: 'white' },
-              '&:hover fieldset': { borderColor: 'white' },
-              '&.Mui-focused fieldset': { borderColor: 'white' }
-            }
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon sx={{ color: 'white' }} />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position='end'>
-                <CloseIcon
-                  onClick={() => setSearchValue('')}
-                  sx={{
-                    fontSize: '15px',
-                    color: searchValue ? 'white' : 'transparent',
-                    cursor: searchValue ? 'pointer' : ''
-                  }}
-                />
-              </InputAdornment>
-            )
-          }}
-        />
+        <AutoCompleteSearchBoard />
 
         <SelectDarkLight />
 
