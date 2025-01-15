@@ -1,4 +1,4 @@
-Dự án clone Trello:
+Dự án clone Trello: https://trello-mern-chi.vercel.app
 
 FE: ReactJS, Redux, Axios, Material UI, Dnd-kit(kéo thả), socket-io(real-time)
 
