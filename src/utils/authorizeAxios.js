@@ -11,7 +11,7 @@ export const injectStore = (mainStore) => {
 }
 
 let authorizeAxiosInstance = axios.create({
-  baseURL: API_ROOT
+  baseURL: '/v1'
 })
 
 authorizeAxiosInstance.defaults.timeout = 1000 * 60 * 10

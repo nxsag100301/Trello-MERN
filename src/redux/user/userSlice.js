@@ -9,7 +9,7 @@ const initialState = {
 export const userLoginAPI = createAsyncThunk(
   'user/userLoginAPI',
   async (data) => {
-    const res = await axios.post('/v1/users/login', data)
+    const res = await axios.post('/users/login', data)
     return res.data
   }
 )
@@ -17,7 +17,7 @@ export const userLoginAPI = createAsyncThunk(
 export const userUpdateAPI = createAsyncThunk(
   'user/updateUserAPI',
   async (data) => {
-    const response = await axios.put('/v1/users/update', data)
+    const response = await axios.put('/users/update', data)
     return response.data
   }
 )
@@ -25,7 +25,7 @@ export const userUpdateAPI = createAsyncThunk(
 export const userLogOutAPI = createAsyncThunk(
   'user/userLogOutAPI',
   async (showSuccessMessage = true) => {
-    const res = await axios.delete('/v1/users/logout')
+    const res = await axios.delete('/users/logout')
     if (showSuccessMessage) {
       toast.success('Logged out!')
     }

@@ -8,7 +8,7 @@ const initialState = {
 export const fetchInvitationsAPI = createAsyncThunk(
   'notifications/fetchInvitationsAPI',
   async () => {
-    const response = await axios.get('/v1/invitations')
+    const response = await axios.get('/invitations')
     return response.data
   }
 )
@@ -16,7 +16,7 @@ export const fetchInvitationsAPI = createAsyncThunk(
 export const updateBoardInvitationAPI = createAsyncThunk(
   'notifications/updateBoardInvitationAPI',
   async ({ invitationId, status }) => {
-    const response = await axios.put(`v1/invitations/board/${invitationId}`, {
+    const response = await axios.put(`/invitations/board/${invitationId}`, {
       status
     })
     return response.data
