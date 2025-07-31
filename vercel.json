@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/v1/:match*",
-      "destination": "trello-be-production.up.railway.app/v1/:match*"
+      "destination": "https://trello-be-production.up.railway.app/v1/:match*"
     },
     {
       "source": "/assets/(.*)",
