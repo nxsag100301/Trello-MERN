@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import { ConfirmProvider } from 'material-ui-confirm'
 import { Provider } from 'react-redux'
 import store from '~/redux/store'
-import { HashRouter as Router, BrowserRouter } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import { injectStore } from './utils/authorizeAxios'
@@ -18,7 +18,7 @@ injectStore(store)
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <BrowserRouter>
+      <Router>
         <CssVarsProvider theme={theme}>
           <ConfirmProvider
             defaultOptions={{
@@ -36,7 +36,7 @@ createRoot(document.getElementById('root')).render(
             />
           </ConfirmProvider>
         </CssVarsProvider>
-      </BrowserRouter>
+      </Router>
     </PersistGate>
   </Provider>
 )
